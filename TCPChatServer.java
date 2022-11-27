@@ -1,0 +1,23 @@
+import java.io.*;
+import java.util.*;
+import java.net.*;
+public class TCPChatServer {
+    public static void main(String[] args) throws Exception{
+        ServerSocket ss= new ServerSocket(8888);
+        Socket s= ss.accept();
+        BufferedReader br1= new BufferedReader(new InputStreamReader(s.getInputStream()));
+        BufferedReader br2= new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter pr= new PrintWriter(s.getOutputStream(), true);
+        
+        while(true){
+            String msg= br1.readLine();
+            if(msg.equals("STOP")) break;
+            System.out.println("Client: "+ msg);
+
+            System.out.println(" Enter msg: ");
+            msg= br2.readLine();
+            pr.println(msg);
+            if(msg.equals("STOP")) break;
+        }
+    }
+}
